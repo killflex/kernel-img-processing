@@ -18,9 +18,12 @@ kernel2 = np.array([[ 1,  0, -1],
                     [ 0,  0,  0], 
                     [-1,  0,  1]])  # Edge detection kernel 2 (deteksi tepi Sobel)
 
+# Apply padding (border reflect) before convolution
+padded_img = cv.copyMakeBorder(img_equalized, top=1, bottom=1, left=1, right=1, borderType=cv.BORDER_REFLECT) 
+
 # Apply convolution using the two kernels
-edge1 = cv.filter2D(img_gray, -1, kernel1)
-edge2 = cv.filter2D(img_gray, -1, kernel2)
+edge1 = cv.filter2D(padded_img, -1, kernel1)
+edge2 = cv.filter2D(padded_img, -1, kernel2)
 
 # Calculate histograms
 hist_gray = cv.calcHist([img_gray], [0], None, [256], [0, 256])
